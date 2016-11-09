@@ -72,7 +72,7 @@ def getValidNumbers(row, col):
 			valid[grid[index][col]-1] = False
 		for i in range(len(grid)/3):
 			for j in range(len(grid[0])/3):
-				valid[grid[(row/3 - 1)+i][(col/3 - 1)+j]-1] = False
+				valid[grid[(row/3)+i][(col/3)+j]-1] = False
 		return valid
 	return None
 
@@ -95,6 +95,12 @@ def fillNumbers():
 		for j in range(len(grid[0])):
 			grid[i][j] = getAnswer(i,j) 
 
+def filled():
+	for i in range(len(grid)):
+		for j in range(len(grid[0])):
+			if (grid[i][j] == 0):
+				return False
+	return True
 #just testing and adding some random numbers and printing grid
 # insertNumber(1, 1, 1)
 # insertNumber(2, 2, 1)
@@ -107,9 +113,15 @@ def fillNumbers():
 # insertNumber(9, 3, 3)
 
 printGrid()
-# v = getValidNumbers(0,2)
-# print(v, end="\n")
-# print(getAnswer(0,2), end="\n")
 print("---------------------", end="\n\n")
-fillNumbers()
-printGrid()
+count = 0
+# while(count < 5000):
+# 	fillNumbers()
+# 	count += 1
+# 	print (count, end="\n")
+# printGrid()
+
+
+v = getValidNumbers(0,4)
+print(v, end="\n")
+print(getAnswer(0,4), end="\n")
