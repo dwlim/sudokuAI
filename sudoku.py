@@ -1,31 +1,35 @@
 from __future__ import print_function
 
-grid = [0] * 81
+#grid = [0] * 81
+size = 9
+grid = [[0 for x in range(size)] for y in range(size)]
+# grid = [9,3,0,6,0,5,8,0,1,5,0,0,0,0,0,0,0,7,0,0,0,0,
+# 	0,8,4,0,3,0,5,8,0,6,3,2,0,0,0,0,3,0,4,0,1,0,0,0,
+# 	0,7,8,1,0,3,6,0,7,0,6,2,0,0,0,0,0,3,0,0,0,0,0,0,
+# 	0,6,8,0,9,4,0,6,0,3,2]
 
 #prints out the grid
 def printGrid():
-	for index in range(len(grid)):
-		print ("%d " % grid[index], end="")
-		if(index%3 == 2):
-			print ("  ", end="")
-		if(index%9 == 8):
-			print ("", end="\n")
-		if(index%27 == 26):
+	for i in range(len(grid)):
+		for j in range(len(grid[0])):
+			print ("%d " % grid[i][j], end="")
+			if(j%3 == 2):
+				print ("  ", end="")
+		print ("", end="\n")
+		if(i%3 == 2):
 			print ("", end="\n")
 
 #inserts a number at a certain row and column. Example insertNumber(1,1,1)
 #will insert then number 1 in the top left
 def insertNumber(num, row, col):
-	position = (row-1)*9 + (col-1)
-	grid[position] = num
+	grid[row-1][col-1] = num
 	return
 
 #will check if a certain row is valid (ie. does it contain 1-9)
 def validRow(row):
 	valid = [False] * 9
-	position = (row-1)*9
-	for index in range(9):
-		valid[grid[position + index]-1] = True
+	for index in range(len(grid[0])):
+		valid[grid[row-1][index]-1] = True
 	for index in range(len(valid)):
 		if valid[index] == False:
 			return False
@@ -34,9 +38,8 @@ def validRow(row):
 #will check if a certain column is valid (ie. does it contain 1-9)
 def validCol(col):
 	valid = [False] * 9
-	position = col-1
-	for index in range(9):
-		valid[grid[position + (index-1)*9]-1] = True
+	for index in range(len(grid)):
+		valid[grid[index][col-1]-1] = True
 	for index in range(len(valid)):
 		if valid[index] == False:
 			return False
@@ -47,10 +50,9 @@ def validCol(col):
 #1,2 is the top middle box etc...
 def validBox(boxR, boxC):
 	valid = [False] * 9
-	position = (boxR-1) * 27 + (boxC-1) * 3
-	boxIter = [0, 1, 2, 9, 10, 11, 18, 19, 20]
-	for index in range(len(boxIter)):
-		valid[grid[position + boxIter[index]]-1] = True
+	for i in range(len(grid)/3):
+		for j in range(len(grid[0])/3):
+			valid[grid[boxR+i-1][boxC+j-1]-1] = True
 	for index in range(len(valid)):
 		if valid[index] == False:
 			return False
@@ -68,4 +70,4 @@ insertNumber(8, 2, 3)
 insertNumber(9, 3, 3)
 
 printGrid()
-print (validBox(1, 1), end="\n")
+print (validBox(1,1), end="\n")
