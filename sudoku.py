@@ -3,15 +3,15 @@ from __future__ import print_function
 #grid = [0] * 81
 size = 9
 grid = [[0 for x in range(size)] for y in range(size)]
-grid[0] = [9,3,0,6,0,5,8,0,1]
-grid[1] = [5,0,0,0,0,0,0,0,7]
-grid[2] = [0,0,0,0,0,8,4,0,3]
-grid[3] = [0,5,8,0,6,3,2,0,0]
-grid[4] = [0,0,3,0,4,0,1,0,0]
-grid[5] = [0,0,7,8,1,0,3,6,0]
-grid[6] = [7,0,6,2,0,0,0,0,0]
-grid[7] = [3,0,0,0,0,0,0,0,6]
-grid[8] = [8,0,9,4,0,6,0,3,2]
+grid[0] = [0,7,6,1,0,0,0,9,0]
+grid[1] = [4,1,8,0,9,0,0,0,0]
+grid[2] = [0,3,0,5,0,4,0,0,1]
+grid[3] = [0,6,1,2,0,0,0,0,4]
+grid[4] = [3,0,0,0,0,0,0,0,2]
+grid[5] = [2,0,0,0,0,6,8,3,0]
+grid[6] = [1,0,0,3,0,8,0,4,0]
+grid[7] = [0,0,0,0,6,0,2,5,8]
+grid[8] = [0,8,0,0,0,7,3,1,0]
 
 #prints out the grid
 def printGrid():
@@ -67,12 +67,18 @@ def getValidNumbers(row, col):
 	if(grid[row][col] == 0):
 		valid = [True] * 9
 		for index in range(len(grid[0])):
-			valid[grid[row][index]-1] = False
+			loc = grid[row][index] - 1
+			if (loc != -1):
+				valid[loc] = False
 		for index in range(len(grid)):
-			valid[grid[index][col]-1] = False
-		for i in range(len(grid)/3):
-			for j in range(len(grid[0])/3):
-				valid[grid[(row/3)+i][(col/3)+j]-1] = False
+			loc = grid[index][col] - 1
+			if (loc != -1):
+				valid[loc] = False
+		for i in range(3):
+			for j in range(3):
+				loc = grid[(row/3)*3+i][(col/3)*3+j] - 1
+				if (loc != -1):
+					valid[loc] = False
 		return valid
 	return None
 
@@ -113,15 +119,15 @@ def filled():
 # insertNumber(9, 3, 3)
 
 printGrid()
-print("---------------------", end="\n\n")
-count = 0
-# while(count < 5000):
-# 	fillNumbers()
-# 	count += 1
-# 	print (count, end="\n")
-# printGrid()
+print("---------------------", end="\n")
+print(" Generating answer...", end="\n")
 
+while(not filled()):
+	fillNumbers()
 
-v = getValidNumbers(0,4)
-print(v, end="\n")
-print(getAnswer(0,4), end="\n")
+print("---------------------", end="\n")
+printGrid()
+
+# v = getValidNumbers(2,0)
+# print(v, end="\n")
+# print(getAnswer(2,0), end="\n")
